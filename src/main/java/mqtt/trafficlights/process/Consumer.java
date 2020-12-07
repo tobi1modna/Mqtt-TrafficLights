@@ -62,13 +62,14 @@ public class Consumer {
             client.subscribe(BROKER_TOPIC+SENSOR_TOPIC, (topic, msg) -> {
 
                 byte[] payload = msg.getPayload();
-                rcv = new String(payload.toString());
+                rcv = new String(payload);
+                logger.info(rcv);
                 logger.info("Message Received ({}) Message Received: {}", topic, new String(payload));
             });
             while(true){
                 if(rcv == "true")
                     normalCycle();
-                else if(rcv == "false")
+                else
                     yellowBlink();
 
             }

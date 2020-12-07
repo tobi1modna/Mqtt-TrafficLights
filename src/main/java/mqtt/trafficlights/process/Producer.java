@@ -8,6 +8,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Scanner;
 import java.util.UUID;
 
 public class Producer {
@@ -39,21 +40,31 @@ public class Producer {
             options.setCleanSession(true);
             options.setConnectionTimeout(10);
 
+            Scanner scan = new Scanner(System.in);
+
             client.connect(options);
 
             logger.info("Producer is connected!\nClient ID: {}", clientID);
 
-            String payload = "false";
-            for(int i = 0; i< 100; i++){
+            String payload;
+            //for(int i = 0; i< 100; i++){
 
-                Thread.sleep(15000);
+              //  Thread.sleep(15000);
 
+                //publishData(client, BROKER_TOPIC + SENSOR_TOPIC, payload);
+                //if (payload == "false")
+                 //   payload = "true";
+               // else
+                //    payload = "false";
+
+            //}
+            while(true){
+                logger.info("type 'false' to enter YellowBlink mode, or 'true' to return normal Cycle. 'x' for exit cycle");
+                payload = scan.next();
                 publishData(client, BROKER_TOPIC + SENSOR_TOPIC, payload);
-                if (payload == "false")
-                    payload = "true";
-                else
-                    payload = "false";
-
+                logger.info("payload is now set to: {}", payload);
+                if(payload == "x")
+                    break;
             }
 
 
